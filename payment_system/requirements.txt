@@ -1,11 +1,7 @@
 yookassa
 fastapi
 python-dotenv
-flask
-Flask-RESTful
-marshmallow
 celery
 redis
-flower
 python-telegram-bot
 uvicorn

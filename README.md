@@ -12,12 +12,5 @@ Master's degree course 2 term
 
 Для запуска:
 ``` bash
-# Сервер Redis
-redis-server
-
-# Celery worker
-celery -A tasks.app worker --loglevel=info
-
-# приложение
-python app.py
+docker-compose up
 ```

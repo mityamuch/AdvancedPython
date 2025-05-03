@@ -6,15 +6,17 @@ from payments import create_payment, check_payment, refund_payment
 from db import init_db
 from config import Config
 import logging
+from contextlib import asynccontextmanager
 
-app = FastAPI(title="Payment System API")
-
-@app.on_event("startup")
-async def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     init_db()
+    yield
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     logger.info("Payment system started")
+
+app = FastAPI(title="Payment System API", lifespan=lifespan)
 
 class PaymentCreateRequest(BaseModel):
     amount: dict
@@ -98,4 +100,4 @@ async def refund_payment_endpoint(request: RefundCreateRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8002)

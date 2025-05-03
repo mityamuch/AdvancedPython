@@ -175,3 +175,4 @@ cython_debug/
 
 .venv
 .env
+payments.db

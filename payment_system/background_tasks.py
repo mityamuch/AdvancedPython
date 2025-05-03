@@ -1,10 +1,11 @@
 from celery import Celery
 from yookassa import Payment
 from config import Config
-from db import update_payment_status
-from notifications import send_notification
+from payment_service.db import update_payment_status
+from payment_service.notifications import send_notification
+import os
 
-app = Celery('tasks', broker='redis://localhost:6379/0')
+app = Celery('tasks', broker=os.getenv('REDIS_URL', 'redis://localhost:6379/0'))
 
 @app.task
 def check_payment_task(payment_id):

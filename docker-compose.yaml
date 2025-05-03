@@ -1,0 +1,36 @@
+services:
+  cache:
+    container_name: cache
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning 
+    networks:
+      - my_network
+
+  payment_service:
+    build:
+      context: payment_system
+      dockerfile: Dockerfile
+    container_name: payment_service
+    environment:
+      - REDIS_URL=redis://cache:6379/0
+      - YOOKASSA_SHOP_ID=your_shop_id
+      - YOOKASSA_SECRET=your_secret_key
+      - RETURN_URL=https://your_redirect_url
+      - TELEGRAM_TOKEN=your_telegram_bot_token
+      - TELEGRAM_CHAT_ID=your_telegram_chat_id
+    ports:
+      - "8002:8002"
+    depends_on:
+      cache:
+        condition: service_started
+    networks:
+      - my_network
+    
+
+networks:
+  my_network:
+    name: my_network
+    driver: bridge
