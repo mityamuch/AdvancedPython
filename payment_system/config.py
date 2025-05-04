@@ -7,3 +7,4 @@ class Config:
     TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
     RETURN_URL = os.getenv('RETURN_URL')
     DB_FILE = "payments.db"
+    REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')

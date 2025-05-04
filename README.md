@@ -12,5 +12,5 @@ Master's degree course 2 term
 
 Для запуска:
 ``` bash
-docker-compose up
+docker-compose up --build
 ```
